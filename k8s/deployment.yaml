@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: env-builder-validator
+  labels:
+    app: env-builder-validator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: env-builder-validator
+  template:
+    metadata:
+      labels:
+        app: env-builder-validator
+    spec:
+      containers:
+        - name: validator
+          image: your-dockerhub-username/env-builder-validator:latest
+          imagePullPolicy: Always
+          # Same image as the CLI, started in HTTP mode
+          command: ["python", "server.py"]
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
