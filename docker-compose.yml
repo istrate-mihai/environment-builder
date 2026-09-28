@@ -1,0 +1,9 @@
+services:
+  validator:
+    build: .
+    image: ${DOCKERHUB_USER:-local}/env-builder-validator:latest
+    # Run with the host user's IDs so files in ./output are owned by you
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    volumes:
+      - ./config:/config:ro
+      - ./output:/output

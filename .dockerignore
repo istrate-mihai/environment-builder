@@ -1,0 +1,5 @@
+*
+!validator/requirements.txt
+!validator/validate.py
+!validator/server.py
+!validator/supported.yml
