@@ -20,7 +20,7 @@ pipeline {
     }
 
     environment {
-        IMAGE              = 'your-dockerhub-username/env-builder-validator'
+        IMAGE              = 'istratemihai/env-builder-validator'
         TAG                = "${env.BUILD_NUMBER}"
         AWS_DEFAULT_REGION = 'eu-central-1'
         ANSIBLE_FORCE_COLOR = 'true'

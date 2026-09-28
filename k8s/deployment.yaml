@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: validator
-          image: your-dockerhub-username/env-builder-validator:latest
+          image: istratemihai/env-builder-validator:latest
           imagePullPolicy: Always
           # Same image as the CLI, started in HTTP mode
           command: ["python", "server.py"]
