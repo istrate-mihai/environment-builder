@@ -24,6 +24,8 @@ pipeline {
         TAG                = "${env.BUILD_NUMBER}"
         AWS_DEFAULT_REGION = 'eu-central-1'
         ANSIBLE_FORCE_COLOR = 'true'
+        LANG = 'C.UTF-8'
+        LC_ALL = 'C.UTF-8'
     }
 
     options {
