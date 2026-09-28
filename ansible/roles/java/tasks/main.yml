@@ -1,0 +1,5 @@
+---
+- name: Install OpenJDK {{ tech_version }}
+  ansible.builtin.apt:
+    name: "openjdk-{{ tech_version }}-jdk-headless"
+    state: present

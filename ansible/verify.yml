@@ -1,0 +1,41 @@
+---
+# Copies scripts/verify.sh + output/verify.conf to the server and runs the check.
+- name: Verify installed technologies
+  hosts: target
+  gather_facts: false
+  vars:
+    remote_dir: /tmp/env-builder
+
+  tasks:
+    - name: Create working directory
+      ansible.builtin.file:
+        path: "{{ remote_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Copy verification script
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../scripts/verify.sh"
+        dest: "{{ remote_dir }}/verify.sh"
+        mode: "0755"
+
+    - name: Copy verification list
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../output/verify.conf"
+        dest: "{{ remote_dir }}/verify.conf"
+        mode: "0644"
+
+    - name: Run verification
+      ansible.builtin.command: "{{ remote_dir }}/verify.sh {{ remote_dir }}/verify.conf"
+      register: verify_result
+      changed_when: false
+      failed_when: false
+
+    - name: Verification report
+      ansible.builtin.debug:
+        msg: "{{ verify_result.stdout_lines }}"
+
+    - name: Fail if any technology is missing or broken
+      ansible.builtin.fail:
+        msg: "Verification failed - see the report above."
+      when: verify_result.rc != 0

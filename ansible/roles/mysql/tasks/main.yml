@@ -1,0 +1,12 @@
+---
+# Ubuntu 24.04 ships MySQL 8.0 in its main repository
+- name: Install MySQL server
+  ansible.builtin.apt:
+    name: mysql-server
+    state: present
+
+- name: Start and enable MySQL
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: true

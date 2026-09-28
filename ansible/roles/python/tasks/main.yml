@@ -1,0 +1,15 @@
+---
+# The system Python comes from Ubuntu; other versions come from the deadsnakes PPA.
+- name: Add deadsnakes PPA
+  ansible.builtin.command: add-apt-repository -y ppa:deadsnakes/ppa
+  args:
+    creates: "/etc/apt/sources.list.d/deadsnakes-ubuntu-ppa-{{ ansible_distribution_release }}.sources"
+  when: tech_version != (ansible_python.version.major | string) ~ '.' ~ (ansible_python.version.minor | string)
+
+- name: Install Python {{ tech_version }}
+  ansible.builtin.apt:
+    name:
+      - "python{{ tech_version }}"
+      - "python{{ tech_version }}-venv"
+    state: present
+    update_cache: true
