@@ -1,0 +1,11 @@
+# Technologies to install on the server.
+# "version" is optional (the default from validator/supported.yml is used).
+# Quote decimal versions: "3.12", not 3.12.
+technologies:
+  - name: docker
+  - name: python
+    version: "3.12"
+  - name: nodejs
+    version: "22"
+  - name: java
+    version: "21"

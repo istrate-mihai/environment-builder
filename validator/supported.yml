@@ -1,0 +1,48 @@
+# Single source of truth for the technologies this project can install.
+#   versions: accepted values in the user config
+#   default:  used when the user config omits "version"
+#   check:    command run on the server by verify.sh ({version} is replaced)
+#   expect:   text that must appear in the output of "check"
+#   service:  (optional) systemd unit that must be active
+#
+# Adding a technology = one entry here + one Ansible role with the same name.
+technologies:
+  docker:
+    versions: ["latest"]
+    default: "latest"
+    check: "docker --version"
+    expect: "Docker version"
+    service: docker
+
+  python:
+    versions: ["3.10", "3.11", "3.12", "3.13"]
+    default: "3.12"
+    check: "python{version} --version"
+    expect: "Python {version}."
+
+  nodejs:
+    versions: ["20", "22", "24"]
+    default: "22"
+    check: "node --version"
+    expect: "v{version}."
+
+  java:
+    versions: ["17", "21"]
+    default: "21"
+    check: "java -version 2>&1"
+    expect: 'version "{version}'
+
+  mysql:
+    versions: ["8.0"]
+    default: "8.0"
+    check: "mysql --version"
+    expect: "Ver {version}."
+    service: mysql
+
+  # Extra: technology added after the initial list
+  nginx:
+    versions: ["latest"]
+    default: "latest"
+    check: "nginx -v 2>&1"
+    expect: "nginx version"
+    service: nginx

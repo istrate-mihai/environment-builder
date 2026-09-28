@@ -1,0 +1,9 @@
+# Intentionally broken - used to demo validation errors.
+technologies:
+  - name: python
+    version: 3.10        # unquoted -> read as 3.1
+  - name: nodejs
+    version: "12"        # not in the supported list
+  - name: mongodb        # not supported
+  - name: java
+  - name: java           # duplicate

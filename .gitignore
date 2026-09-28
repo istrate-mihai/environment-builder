@@ -1,0 +1,20 @@
+# Generated files
+output/*
+!output/.gitkeep
+.env
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate*
+terraform/.terraform.lock.hcl.bak
+terraform/terraform.tfvars
+terraform/*.pub
+
+# Keys / secrets
+*.pem
+id_*
+
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
