@@ -74,7 +74,7 @@ pipeline {
                     docker run --rm --user "$(id -u):$(id -g)" \
                         -v "$WORKSPACE/config:/config:ro" \
                         -v "$WORKSPACE/output:/output" \
-                        "$IMAGE:$TAG" --config "/config/$CONFIG_NAME" --out-dir /output
+                        "$IMAGE:$TAG" --config "/config/${CONFIG_NAME:-environment.yml}" --out-dir /output
                 '''
             }
         }
