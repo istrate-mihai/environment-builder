@@ -1,3 +1,4 @@
+# terraform/main.tf
 # Latest Ubuntu 24.04 LTS image published by Canonical
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -33,6 +34,20 @@ resource "aws_vpc_security_group_ingress_rule" "ssh" {
   security_group_id = aws_security_group.this.id
   description       = "SSH from the admin / Jenkins IP only"
   cidr_ipv4         = var.allowed_ssh_cidr
+  ip_protocol       = "tcp"
+  from_port         = 22
+  to_port           = 22
+}
+
+# AWS-owned IP ranges of EC2 Instance Connect (browser SSH from the console)
+data "aws_ec2_managed_prefix_list" "instance_connect" {
+  name = "com.amazonaws.${var.aws_region}.ec2-instance-connect"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "instance_connect" {
+  security_group_id = aws_security_group.this.id
+  description       = "SSH from EC2 Instance Connect (AWS console)"
+  prefix_list_id    = data.aws_ec2_managed_prefix_list.instance_connect.id
   ip_protocol       = "tcp"
   from_port         = 22
   to_port           = 22
